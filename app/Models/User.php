@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -41,4 +42,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Scope Variable
+    public function scopeYesterday($query)
+    {
+        return $query->whereDate('created_at', \Carbon\Carbon::yesterday());
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = Str::upper($value);
+    }
 }

@@ -14,6 +14,6 @@ class UserClass implements UserRepository
 {
     public function listAll()
     {
-        return User::paginate(10);
+        return User::yesterday()->paginate(10);
     }
 }
