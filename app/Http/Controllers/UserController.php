@@ -6,6 +6,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserEditRequest;
 use App\Repository\UserRepository;
 use Illuminate\Support\Facades\Hash;
+use App\Events\ErrorHistory;
 use App\Models\User;
 use Auth;
 
@@ -60,15 +61,24 @@ class UserController extends Controller
             $SaveUser = $User->save();
 
             if ($SaveUser) {
+
                 session()->flash('success', 'New User has been Added successfully.');
                 return redirect()->route('users.index');
             } else {
+
+                // Error History Maintained
+
+                $Data = ['error' => 'User Data is not saved.', 'table' => 'users'];
+                event(new ErrorHistory($Data));
+
                 session()->flash('error', 'User Data is not saved.');
                 return redirect()->route('users.index');
             }
         } catch (\Illuminate\Database\QueryException $exception) {
 
-            // print_r($exception->errorInfo); die;
+            $Data = ['error' => $exception->errorInfo[2], 'table' => 'users'];
+            event(new ErrorHistory($Data));
+
             session()->flash('error', $exception->errorInfo[2]);
             return redirect()->route('users.index');
         }
