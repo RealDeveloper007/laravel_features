@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class UserCreateRequest extends FormRequest
 {
@@ -23,11 +24,17 @@ class UserCreateRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'username' => ['required', 'string', 'min:3', 'max:255'],
+            'name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'min:6'],
             'confirm_password'      => 'required|min:6|same:password',
         ];
     }
+
+    // public function failedValidation(Validator $validator)
+    // {
+    //     session()->flash('error', $validator->errors());
+    // }
 }

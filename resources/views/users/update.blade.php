@@ -11,6 +11,7 @@
     <div class="card-body">
 
         @include("alerts.success")
+        @include("alerts.error")
 
         {{ Form::model($user,['route' => ['users.update', $user->id], 'method' => 'put','id' => 'edit-user','enctype'=>"multipart/form-data"]) }}
 

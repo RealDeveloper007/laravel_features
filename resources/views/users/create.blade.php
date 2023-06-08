@@ -11,6 +11,8 @@
         <h3 class="card-title">Add New User</h3>
     </div>
     <div class="card-body">
+        @include("alerts.error")
+
         {{ Form::open(['route' => 'users.store', 'method' => 'post','id' => 'create-user','class'=>"form-horizontal",'enctype'=>"multipart/form-data"]) }}
 
         @include("users.form")
