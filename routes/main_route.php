@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckStatus;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::middleware([CheckStatus::class])->group(
+//     function () {
+
 Route::get('/', function () {
     return view('welcome');
 });
+//     }
+// );
 
 includeRouteFiles(__DIR__ . '/backend/');
